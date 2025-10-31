@@ -50,8 +50,8 @@
 									</div>
 
 									<div class="card-body">
-										<p>Halo user! SICMAS merupakan singkatan dari Sistem Informasi CRUD Mahasiswa, aplikasi ini bertujuan untuk mengajarkan bagaimana merancang sebuah dashboard pengelolaan dengan konsep CRUD menggunakan bahasa pemrograman PHP. Penulisan kode menggunakan OOP (Object Oriented Programming). Silakan gunakan secara bijak dan modifikasi sesuai keperluan!</p>
-										<p>Silakan pilih salah satu tombol untuk memulai!</p>
+										<p>Groove Pass adalah sebuah website pemesanan tiket konser yang dirancang untuk memberikan pengalaman praktis dan menyenangkan bagi para pecinta musik. Melalui platform ini, pengguna dapat dengan mudah menemukan berbagai konser dari beragam band dan artis favorit mereka, serta melakukan pemesanan tiket hanya dalam beberapa langkah. Tampilan yang sederhana namun interaktif membuat pengguna dapat menjelajahi jadwal konser, harga tiket, dan detail acara dengan nyaman dan efisien.</p>
+										<p>Groove Pass dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) yang memungkinkan pengelola sistem untuk menambahkan, menampilkan, mengubah, dan menghapus data pemesan tiket, nama konser, serta nama band.</p>
 										<a href="data-input.php" class="btn btn-primary btn-lg"><i class="bi bi-clipboard-data-fill"></i> Input Data Mahasiswa</a>
 										<a href="data-list.php" class="btn btn-success btn-lg"><i class="bi bi-card-list"></i> Lihat Daftar Mahasiswa</a>
 										<a href="data-search.php" class="btn btn-warning btn-lg"><i class="bi bi-search-heart-fill"></i> Cari Mahasiswa</a>

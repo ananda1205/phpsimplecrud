@@ -1,20 +1,14 @@
 <?php 
 
 include_once 'config/class-master.php';
+include_once 'config/class-mahasiswa.php';
 $master = new MasterData();
 // Mengambil daftar program studi, provinsi, dan status mahasiswa
-$prodiList = $master->getProdi();
-// Mengambil daftar provinsi
-$provinsiList = $master->getProvinsi();
-// Mengambil daftar status mahasiswa
-$statusList = $master->getStatus();
-// Menampilkan alert berdasarkan status yang diterima melalui parameter GET
-if(isset($_GET['status'])){
-    // Mengecek nilai parameter GET 'status' dan menampilkan alert yang sesuai menggunakan JavaScript
-    if($_GET['status'] == 'failed'){
-        echo "<script>alert('Gagal menambahkan data mahasiswa. Silakan coba lagi.');</script>";
-    }
-}
+$listKonser = $master->getKonser();
+$listPelanggan = $master->getPelanggan();
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,7 +30,7 @@ if(isset($_GET['status'])){
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-sm-6">
-								<h3 class="mb-0">Input Mahasiswa</h3>
+								<h3 class="mb-0">Input Pesanan</h3>
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-end">
@@ -54,7 +48,7 @@ if(isset($_GET['status'])){
 							<div class="col-12">
 								<div class="card">
 									<div class="card-header">
-										<h3 class="card-title">Formulir Mahasiswa</h3>
+										<h3 class="card-title">Formulir Pemesanan Tiket</h3>
 										<div class="card-tools">
 											<button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
 												<i data-lte-icon="expand" class="bi bi-plus-lg"></i>
@@ -66,70 +60,51 @@ if(isset($_GET['status'])){
 										</div>
 									</div>
                                     <form action="proses/proses-input.php" method="POST">
-									    <div class="card-body">
-                                            <div class="mb-3">
-                                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
-                                                <input type="number" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM Mahasiswa" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Nama Lengkap</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Lengkap Mahasiswa" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="prodi" class="form-label">Program Studi</label>
-                                                <select class="form-select" id="prodi" name="prodi" required>
-                                                    <option value="" selected disabled>Pilih Program Studi</option>
-                                                    <?php 
-                                                    // Iterasi daftar program studi dan menampilkannya sebagai opsi dalam dropdown
-                                                    foreach ($prodiList as $prodi){
-                                                        echo '<option value="'.$prodi['id'].'">'.$prodi['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="alamat" class="form-label">Alamat</label>
-                                                <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap Sesuai KTP" required></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="provinsi" class="form-label">Provinsi</label>
-                                                <select class="form-select" id="provinsi" name="provinsi" required>
-                                                    <option value="" selected disabled>Pilih Provinsi</option>
-                                                    <?php
-                                                    // Iterasi daftar provinsi dan menampilkannya sebagai opsi dalam dropdown
-                                                    foreach ($provinsiList as $provinsi){
-                                                        echo '<option value="'.$provinsi['id'].'">'.$provinsi['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Valid dan Benar" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="telp" class="form-label">Nomor Telepon</label>
-                                                <input type="tel" class="form-control" id="telp" name="telp" placeholder="Masukkan Nomor Telpon/HP" pattern="[0-9+\-\s()]{6,20}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="status" class="form-label">Status</label>
-                                                <select class="form-select" id="status" name="status" required>
-                                                    <option value="" selected disabled>Pilih Status</option>
-                                                    <?php 
-                                                    // Iterasi daftar status mahasiswa dan menampilkannya sebagai opsi dalam dropdown
-                                                    foreach ($statusList as $status){
-                                                        echo '<option value="'.$status['id'].'">'.$status['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-									    <div class="card-footer">
-                                            <button type="button" class="btn btn-danger me-2 float-start" onclick="window.location.href='data-list.php'">Batal</button>
-                                            <button type="reset" class="btn btn-secondary me-2 float-start">Reset</button>
-                                            <button type="submit" class="btn btn-primary float-end">Submit</button>
-                                        </div>
-                                    </form>
+    <div class="card-body">
+
+        <!-- Nama Pelanggan -->
+        <div class="mb-3">
+            <label for="id_pelanggan" class="form-label">Nama Lengkap</label>
+            <select class="form-select" id="id_pelanggan" name="id_pelanggan" required>
+                <option value="" selected disabled>Nama Pelanggan</option>
+                <?php 
+                // Menampilkan daftar pelanggan dari array $listPelanggan
+                foreach ($listPelanggan as $pelanggan){
+                    echo '<option value="'.$pelanggan['id_pelanggan'].'">'.$pelanggan['nm_pelanggan'].'</option>';
+                }
+                ?>
+            </select>
+        </div>
+
+        <!-- Nama Konser -->
+        <div class="mb-3">
+            <label for="id_konser" class="form-label">Nama Konser</label>
+            <select class="form-select" id="id_konser" name="id_konser" required>
+                <option value="" selected disabled>Pilih Konser</option>
+                <?php 
+                // Menampilkan daftar konser dari array $listKonser
+                foreach ($listKonser as $konser){
+                    echo '<option value="'.$konser['id_konser'].'">'.$konser['nm_konser'].'</option>';
+                }
+                ?>
+            </select>
+        </div>
+
+        <!-- Jumlah Tiket -->
+        <div class="mb-3">
+        <label for="qty_tiket" class="form-label">Jumlah Tiket</label>
+        <input type="number" class="form-control" id="qty_tiket" name="qty_tiket" placeholder="Masukkan jumlah tiket" required>
+    </div>
+
+    </div>
+
+    <div class="card-footer">
+        <button type="button" class="btn btn-danger me-2 float-start" onclick="window.location.href='data-list.php'">Batal</button>
+        <button type="reset" class="btn btn-secondary me-2 float-start">Reset</button>
+        <button type="submit" class="btn btn-primary float-end">Submit</button>
+    </div>
+</form>
+
 								</div>
 							</div>
 						</div>

@@ -5,37 +5,40 @@ include_once 'db-config.php';
 
 class MasterData extends Database {
 
-    // Method untuk mendapatkan daftar program studi
-    public function getProdi(){
-        $query = "SELECT * FROM tb_prodi";
+    // Method untuk mendapatkan daftar konser
+    public function getKonser(){
+        $query = "SELECT * FROM tb_konser";
         $result = $this->conn->query($query);
-        $prodi = [];
+        $konser = [];
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $prodi[] = [
-                    'id' => $row['kode_prodi'],
-                    'nama' => $row['nama_prodi']
+                $konser[] = [
+                    'id_konser' => $row['id_konser'],
+                    'nm_konser' => $row['nm_konser']
                 ];
             }
         }
-        return $prodi;
+        return $konser;
+    }
+    // Method untuk mendapatkan daftar pelanggan
+
+    public function getPelanggan(){
+        $query = "SELECT * FROM tb_pelanggan";
+        $result = $this->conn->query($query);
+        $pelanggan = [];
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $pelanggan[] = [
+                    'id_pelanggan' => $row['id_pelanggan'],
+                    'nm_pelanggan' => $row['nm_pelanggan']
+                ];
+            }
+        }
+        return $pelanggan;
     }
 
     // Method untuk mendapatkan daftar provinsi
-    public function getProvinsi(){
-        $query = "SELECT * FROM tb_provinsi";
-        $result = $this->conn->query($query);
-        $provinsi = [];
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $provinsi[] = [
-                    'id' => $row['id_provinsi'],
-                    'nama' => $row['nama_provinsi']
-                ];
-            }
-        }
-        return $provinsi;
-    }
+    
 
     // Method untuk mendapatkan daftar status mahasiswa menggunakan array statis
     public function getStatus(){
