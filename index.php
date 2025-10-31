@@ -18,7 +18,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-sm-6">
-								<h3 class="mb-0">Aplikasi SICMAS</h3>
+								<h3 class="mb-0">GROOVE PASS</h3>
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-end">
