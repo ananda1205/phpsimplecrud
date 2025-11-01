@@ -1,7 +1,7 @@
 <?php
 
 include_once 'config/class-mahasiswa.php';
-$mahasiswa = new Mahasiswa();
+$pesanan = new Pesanan();
 // Menampilkan alert berdasarkan status yang diterima melalui parameter GET
 if(isset($_GET['status'])){
 	// Mengecek nilai parameter GET 'status' dan menampilkan alert yang sesuai menggunakan JavaScript
@@ -15,7 +15,7 @@ if(isset($_GET['status'])){
 		echo "<script>alert('Gagal menghapus data mahasiswa. Silakan coba lagi.');</script>";
 	}
 }
-$dataMahasiswa = $mahasiswa->getAllMahasiswa();
+$dataPesanan = $pesanan->getAllMahasiswa();
 
 ?>
 <!doctype html>
@@ -56,7 +56,7 @@ $dataMahasiswa = $mahasiswa->getAllMahasiswa();
 							<div class="col-12">
 								<div class="card">
 									<div class="card-header">
-										<h3 class="card-title">Tabel Mahasiswa</h3>
+										<h3 class="card-title">Tabel Pesanan</h3>
 										<div class="card-tools">
 											<button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
 												<i data-lte-icon="expand" class="bi bi-plus-lg"></i>
@@ -72,47 +72,37 @@ $dataMahasiswa = $mahasiswa->getAllMahasiswa();
 											<thead>
 												<tr>
 													<th>No</th>
-													<th>NIM</th>
-													<th>Nama</th>
-													<th>Prodi</th>
-													<th>Provinsi</th>
-													<th>Alamat</th>
-													<th>Telp</th>
+													<th>Nama Pelanggan</th>
 													<th>Email</th>
-													<th class="text-center">Status</th>
-													<th class="text-center">Aksi</th>
+													<th>Konser</th>
+													<th>Artis/Penampilan</th>
+													<th>Lokasi Konser</th>
+													<th>Tanggal</th>
+													<th>Jumlah Tiket</th>
+\													<th class="text-center">Aksi</th>
 												</tr>
 											</thead>
 											<tbody>
 												<?php
-													if(count($dataMahasiswa) == 0){
+													if(count($dataPesanan) == 0){
 													    echo '<tr class="align-middle">
 															<td colspan="10" class="text-center">Tidak ada data mahasiswa.</td>
 														</tr>';
 													} else {
-														foreach ($dataMahasiswa as $index => $mahasiswa){
-															if($mahasiswa['status'] == 1){
-															    $mahasiswa['status'] = '<span class="badge bg-success">Aktif</span>';
-															} elseif($mahasiswa['status'] == 2){
-															    $mahasiswa['status'] = '<span class="badge bg-danger">Tidak Aktif</span>';
-															} elseif($mahasiswa['status'] == 3){
-															    $mahasiswa['status'] = '<span class="badge bg-warning text-dark">Cuti</span>';
-															} elseif($mahasiswa['status'] == 4){
-															    $mahasiswa['status'] = '<span class="badge bg-primary">Lulus</span>';
-															} 
+														foreach ($dataPesanan as $index => $pesanan){
+									
 															echo '<tr class="align-middle">
 																<td>'.($index + 1).'</td>
-																<td>'.$mahasiswa['nim'].'</td>
-																<td>'.$mahasiswa['nama'].'</td>
-																<td>'.$mahasiswa['prodi'].'</td>
-																<td>'.$mahasiswa['provinsi'].'</td>
-																<td>'.$mahasiswa['alamat'].'</td>
-																<td>'.$mahasiswa['telp'].'</td>
-																<td>'.$mahasiswa['email'].'</td>
-																<td class="text-center">'.$mahasiswa['status'].'</td>
+																<td>'.$pesanan['nm_pelanggan'].'</td>
+																<td>'.$pesanan['email'].'</td>
+																<td>'.$pesanan['nm_konser'].'</td>
+																<td>'.$pesanan['artis'].'</td>
+																<td>'.$pesanan['lokasi'].'</td>
+																<td>'.$pesanan['tanggal'].'</td>
+																<td>'.$pesanan['qty_tiket'].'</td>
 																<td class="text-center">
-																	<button type="button" class="btn btn-sm btn-warning me-1" onclick="window.location.href=\'data-edit.php?id='.$mahasiswa['id'].'\'"><i class="bi bi-pencil-fill"></i> Edit</button>
-																	<button type="button" class="btn btn-sm btn-danger" onclick="if(confirm(\'Yakin ingin menghapus data mahasiswa ini?\')){window.location.href=\'proses/proses-delete.php?id='.$mahasiswa['id'].'\'}"><i class="bi bi-trash-fill"></i> Hapus</button>
+																	<button type="button" class="btn btn-sm btn-warning me-1" onclick="window.location.href=\'data-edit.php?id='.$pesanan['id'].'\'"><i class="bi bi-pencil-fill"></i> Edit</button>
+																	<button type="button" class="btn btn-sm btn-danger" onclick="if(confirm(\'Yakin ingin menghapus data mahasiswa ini?\')){window.location.href=\'proses/proses-delete.php?id='.$pesanan['id'].'\'}"><i class="bi bi-trash-fill"></i> Hapus</button>
 																</td>
 															</tr>';
 														}

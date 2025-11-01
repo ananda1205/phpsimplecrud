@@ -14,7 +14,10 @@ class MasterData extends Database {
             while($row = $result->fetch_assoc()) {
                 $konser[] = [
                     'id_konser' => $row['id_konser'],
-                    'nm_konser' => $row['nm_konser']
+                    'nm_konser' => $row['nm_konser'],
+                    'artis' => $row['artis'],
+                    'lokasi' => $row['lokasi'],
+                    'tanggal' => $row['tanggal']
                 ];
             }
         }
@@ -30,7 +33,9 @@ class MasterData extends Database {
             while($row = $result->fetch_assoc()) {
                 $pelanggan[] = [
                     'id_pelanggan' => $row['id_pelanggan'],
-                    'nm_pelanggan' => $row['nm_pelanggan']
+                    'nm_pelanggan' => $row['nm_pelanggan'],
+                    'telp' => $row['telp'],
+                    'email' => $row['email']
                 ];
             }
         }
@@ -41,14 +46,7 @@ class MasterData extends Database {
     
 
     // Method untuk mendapatkan daftar status mahasiswa menggunakan array statis
-    public function getStatus(){
-        return [
-            ['id' => 1, 'nama' => 'Aktif'],
-            ['id' => 2, 'nama' => 'Tidak Aktif'],
-            ['id' => 3, 'nama' => 'Cuti'],
-            ['id' => 4, 'nama' => 'Lulus']
-        ];
-    }
+    
 
     // Method untuk input data program studi
     public function inputProdi($data){

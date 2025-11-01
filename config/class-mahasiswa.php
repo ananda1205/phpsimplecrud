@@ -30,38 +30,42 @@ class Pesanan extends Database {
     // Method untuk mengambil semua data mahasiswa
     public function getAllMahasiswa(){
         // Menyiapkan query SQL untuk mengambil data mahasiswa beserta prodi dan provinsi
-        $query = "SELECT id_mhs, nim_mhs, nama_mhs, nama_prodi, nama_provinsi, alamat, email, telp, status_mhs 
-                  FROM tb_mahasiswa
-                  JOIN tb_prodi ON prodi_mhs = kode_prodi
-                  JOIN tb_provinsi ON provinsi = id_provinsi";
-        $result = $this->conn->query($query);
+        $query = "SELECT p.id_pesanan, pl.nm_pelanggan, pl.email, k.nm_konser, k.artis, k.lokasi, k.tanggal, p.qty_tiket AS Tiket
+          FROM tb_pesanan p
+          JOIN tb_pelanggan pl ON p.id_pelanggan = pl.id_pelanggan
+          JOIN tb_konser k ON p.id_konser = k.id_konser";
+$result = $this->conn->query($query);
+
         // Menyiapkan array kosong untuk menyimpan data mahasiswa
-        $mahasiswa = [];
+        $pesanan = [];
         // Mengecek apakah ada data yang ditemukan
         if($result->num_rows > 0){
             // Mengambil setiap baris data dan memasukkannya ke dalam array
             while($row = $result->fetch_assoc()) {
-                $mahasiswa[] = [
-                    'id' => $row['id_mhs'],
-                    'nim' => $row['nim_mhs'],
-                    'nama' => $row['nama_mhs'],
-                    'prodi' => $row['nama_prodi'],
-                    'provinsi' => $row['nama_provinsi'],
-                    'alamat' => $row['alamat'],
+                $pesanan[] = [
+                    'id' => $row['id_pesanan'],
+                    'nm_pelanggan' => $row['nm_pelanggan'],
                     'email' => $row['email'],
-                    'telp' => $row['telp'],
-                    'status' => $row['status_mhs']
+                    'nm_konser' => $row['nm_konser'],
+                    'artis' => $row['artis'],
+                    'lokasi' => $row['lokasi'],
+                    'tanggal' => $row['tanggal'],
+                    'qty_tiket' => $row['Tiket']
                 ];
             }
         }
         // Mengembalikan array data mahasiswa
-        return $mahasiswa;
+        return $pesanan;
     }
 
     // Method untuk mengambil data mahasiswa berdasarkan ID
     public function getUpdateMahasiswa($id){
         // Menyiapkan query SQL untuk mengambil data mahasiswa berdasarkan ID menggunakan prepared statement
-        $query = "SELECT * FROM tb_mahasiswa WHERE id_mhs = ?";
+        $query = "SELECT p.id_pesanan, pl.nm_pelanggan, pl.email, k.nm_konser, k.artis, k.lokasi, k.tanggal, p.qty_tiket AS Tiket
+          FROM tb_pesanan p
+          JOIN tb_pelanggan pl ON p.id_pelanggan = pl.id_pelanggan
+          JOIN tb_konser k ON p.id_konser = k.id_konser
+          WHERE p.id_pesanan = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
@@ -75,15 +79,14 @@ class Pesanan extends Database {
             $row = $result->fetch_assoc();
             // Menyimpan data dalam array
             $data = [
-                'id' => $row['id_mhs'],
-                'nim' => $row['nim_mhs'],
-                'nama' => $row['nama_mhs'],
-                'prodi' => $row['prodi_mhs'],
-                'alamat' => $row['alamat'],
-                'provinsi' => $row['provinsi'],
-                'email' => $row['email'],
-                'telp' => $row['telp'],
-                'status' => $row['status_mhs']
+                    'id' => $row['id_pesanan'],
+                    'nm_pelanggan' => $row['nm_pelanggan'],
+                    'email' => $row['email'],
+                    'nm_konser' => $row['nm_konser'],
+                    'artis' => $row['artis'],
+                    'lokasi' => $row['lokasi'],
+                    'tanggal' => $row['tanggal'],
+                    'qty_tiket' => $row['Tiket']
             ];
         }
         $stmt->close();
@@ -94,23 +97,36 @@ class Pesanan extends Database {
     // Method untuk mengedit data mahasiswa
     public function editMahasiswa($data){
         // Mengambil data dari parameter $data
-        $id       = $data['id'];
-        $nim      = $data['nim'];
-        $nama     = $data['nama'];
-        $prodi    = $data['prodi'];
-        $alamat   = $data['alamat'];
-        $provinsi = $data['provinsi'];
-        $email    = $data['email'];
-        $telp     = $data['telp'];
-        $status   = $data['status'];
+        $id       = $data['id_pesanan'];
+        $nm_pelanggan      = $data['nm_pelanggan'];
+        $email     = $data['email'];
+        $nm_konser    = $data['nm_konser'];
+        $artis   = $data['artis'];
+        $lokasi = $data['lokasi'];
+        $tanggal    = $data['tanggal'];
+        $qty_tiket     = $data['Tiket'];
         // Menyiapkan query SQL untuk update data menggunakan prepared statement
-        $query = "UPDATE tb_mahasiswa SET nim_mhs = ?, nama_mhs = ?, prodi_mhs = ?, alamat = ?, provinsi = ?, email = ?, telp = ?, status_mhs = ? WHERE id_mhs = ?";
-        $stmt = $this->conn->prepare($query);
-        if(!$stmt){
+        $query = "UPDATE tb_pesanan p
+          JOIN tb_pelanggan pl ON p.id_pelanggan = pl.id_pelanggan
+          JOIN tb_konser k ON p.id_konser = k.id_konser
+          SET  
+              pl.nm_pelanggan = ?,
+              pl.email = ?,
+              k.nm_konser = ?,
+              k.artis = ?,
+              k.lokasi =?,
+              k.tanggal =?,
+              k.qty_tiket = ?
+
+          WHERE p.id_pesanan = ?";
+$stmt = $this->conn->prepare($query);
+
+if(!$stmt){
             return false;
         }
+
         // Memasukkan parameter ke statement
-        $stmt->bind_param("ssssssssi", $nim, $nama, $prodi, $alamat, $provinsi, $email, $telp, $status, $id);
+        $stmt->bind_param("ssssssss", $nm_pelanggan, $nm_konser, $artis, $lokasi, $tanggal, $qty_tiket, $id_pesanan);
         $result = $stmt->execute();
         $stmt->close();
         // Mengembalikan hasil eksekusi query
@@ -120,7 +136,7 @@ class Pesanan extends Database {
     // Method untuk menghapus data mahasiswa
     public function deleteMahasiswa($id){
         // Menyiapkan query SQL untuk delete data menggunakan prepared statement
-        $query = "DELETE FROM tb_mahasiswa WHERE id_mhs = ?";
+        $query = "DELETE FROM tb_pesanan WHERE id_pesanan = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
