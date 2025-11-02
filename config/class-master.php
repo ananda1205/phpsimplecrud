@@ -28,10 +28,10 @@ class MasterData extends Database {
     public function getPelanggan(){
         $query = "SELECT * FROM tb_pelanggan";
         $result = $this->conn->query($query);
-        $pelanggan = [];
+        $data = [];
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $pelanggan[] = [
+                $data[] = [
                     'id_pelanggan' => $row['id_pelanggan'],
                     'nm_pelanggan' => $row['nm_pelanggan'],
                     'telp' => $row['telp'],
@@ -39,7 +39,7 @@ class MasterData extends Database {
                 ];
             }
         }
-        return $pelanggan;
+        return $data;
     }
 
     // Method untuk mendapatkan daftar provinsi
@@ -49,65 +49,68 @@ class MasterData extends Database {
     
 
     // Method untuk input data program studi
-    public function inputProdi($data){
-        $kodeProdi = $data['kode'];
-        $namaProdi = $data['nama'];
-        $query = "INSERT INTO tb_prodi (kode_prodi, nama_prodi) VALUES (?, ?)";
+    public function inputPelanggan($data){
+        $namaPelanggan = $data['nm_pelanggan'];
+        $telp = $data['telp'];
+        $email = $data['email'];
+        $query = "INSERT INTO tb_pelanggan (nm_pelanggan, telp, email) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
         }
-        $stmt->bind_param("ss", $kodeProdi, $namaProdi);
+        $stmt->bind_param("sss", $namaPelanggan, $telp, $email);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
     // Method untuk mendapatkan data program studi berdasarkan kode
-    public function getUpdateProdi($id){
-        $query = "SELECT * FROM tb_prodi WHERE kode_prodi = ?";
+    public function getUpdatePelanggan($id){
+        $query = "SELECT * FROM tb_pelanggan WHERE id_pelanggan = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
         }
-        $stmt->bind_param("s", $id);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
-        $prodi = null;
+        $pelanggan = null;
         if($result->num_rows > 0){
             $row = $result->fetch_assoc();
-            $prodi = [
-                'id' => $row['kode_prodi'],
-                'nama' => $row['nama_prodi']
+            $pelanggan = [
+                'nm_pelanggan' => $row['nm_pelanggan'],
+                'telp' => $row['telp'],
+                'email' => $row['email']
             ];
         }
         $stmt->close();
-        return $prodi;
+        return $pelanggan;
     }
 
     // Method untuk mengedit data program studi
-    public function updateProdi($data){
-        $kodeProdi = $data['kode'];
-        $namaProdi = $data['nama'];
-        $query = "UPDATE tb_prodi SET nama_prodi = ? WHERE kode_prodi = ?";
+    public function updatePelanggan($data){
+        $namaPelanggan = $data['nm_pelanggan'];
+        $telp = $data['telp'];
+        $email = $data['email'];
+        $query = "UPDATE tb_pelanggan SET nm_pelanggan = ? WHERE id_pelanggan = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
         }
-        $stmt->bind_param("ss", $namaProdi, $kodeProdi);
+        $stmt->bind_param("sssi", $namaPelanggan, $telp, $email);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
     // Method untuk menghapus data program studi
-    public function deleteProdi($id){
-        $query = "DELETE FROM tb_prodi WHERE kode_prodi = ?";
+    public function deletePelanggan($id){
+        $query = "DELETE FROM tb_pelanggan WHERE id_pelanggan = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt){
             return false;
         }
-        $stmt->bind_param("s", $id);
+        $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
         return $result;

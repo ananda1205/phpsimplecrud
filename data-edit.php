@@ -10,7 +10,7 @@ $listPelanggan = $master->getPelanggan();
 $listKonser = $master->getKonser();
 
 // Mengambil data mahasiswa yang akan diedit berdasarkan id dari parameter GET
-$dataPesanan = $pesanan->getUpdateMahasiswa($_GET['id']);
+$dataPesanan = $pesanan->getUpdatePesanan($_GET['id']);
 if(isset($_GET['status'])){
     if($_GET['status'] == 'failed'){
         echo "<script>alert('Gagal mengubah data mahasiswa. Silakan coba lagi.');</script>";

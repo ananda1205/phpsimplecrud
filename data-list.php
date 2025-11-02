@@ -15,7 +15,7 @@ if(isset($_GET['status'])){
 		echo "<script>alert('Gagal menghapus data mahasiswa. Silakan coba lagi.');</script>";
 	}
 }
-$dataPesanan = $pesanan->getAllMahasiswa();
+$dataPesanan = $pesanan->getAllPesanan();
 
 ?>
 <!doctype html>

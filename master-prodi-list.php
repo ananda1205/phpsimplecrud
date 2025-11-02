@@ -14,6 +14,9 @@ if(isset($_GET['status'])){
 }
 $dataPelanggan = $master->getPelanggan();
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -97,7 +100,7 @@ $dataPelanggan = $master->getPelanggan();
 									</div>
 
 									<div class="card-footer">
-										<button type="button" class="btn btn-primary" onclick="window.location.href='master-pelanggan-input.php'"><i class="bi bi-plus-lg"></i> Tambah Data Pelanggan</button>
+										<button type="button" class="btn btn-primary" onclick="window.location.href='master-prodi-input.php'"><i class="bi bi-plus-lg"></i> Tambah Data Pelanggan</button>
 									</div>
 								</div>
 							</div>

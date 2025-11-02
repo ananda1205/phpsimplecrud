@@ -57,15 +57,19 @@ if(isset($_GET['status'])){
 											</button>
 										</div>
 									</div>
-                                    <form action="proses/proses-prodi.php?aksi=inputprodi" method="POST">
+                                    <form action="proses/proses-prodi.php?aksi=inputpelanggan" method="POST">
 									    <div class="card-body">
                                             <div class="mb-3">
-                                                <label for="nama" class="form-label">Kode Program</label>
-                                                <input type="text" class="form-control" id="kode" name="kode" placeholder="Masukkan Kode Program Studi" required>
+                                                <label for="nama" class="form-label">Nama Pelanggan</label>
+                                                <input type="text" class="form-control" id="nm_pelanggan" name="nm_pelanggan" placeholder="Masukkan Nama Pelanggan" required>
                                             </div>
 											<div class="mb-3">
-												<label for="nama" class="form-label">Nama Program Studi</label>
-												<input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Program Studi" required>
+												<label for="nama" class="form-label">Nomor Telp</label>
+												<input type="text" class="form-control" id="telp" name="telp" placeholder="Masukkan Nomor Telp" required>
+											</div>
+											<div class="mb-3">
+												<label for="nama" class="form-label">Email</label>
+												<input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
 											</div>
                                         </div>
 									    <div class="card-footer">
