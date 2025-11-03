@@ -6,6 +6,7 @@ include_once '../config/class-mahasiswa.php';
 $pesanan = new Pesanan();
 // Mengambil data mahasiswa dari form edit menggunakan metode POST dan menyimpannya dalam array
 $dataPesanan = [
+    'id' => $_POST['id'], 
     'id_pelanggan' => $_POST['id_pelanggan'],
     'id_konser' => $_POST['id_konser'],
     'qty_tiket' => $_POST['qty_tiket']
